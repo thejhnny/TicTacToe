@@ -34,16 +34,17 @@ class Game {
           if (this.turn === 'X') {
             this.X.push(position);
             console.log(this.checkWin());
-            this.turn = 'O'
+            this.turn = 'O';
+            return;
           } else {
             this.O.push(position);
             this.checkWin();
-            this.turn = 'X'
+            this.turn = 'X';
+            return;
           }
-        } else {
-          return 'Position already taken, choose another one';
-        }
+        }  
       }
+      return 'Position already taken, choose another one';
     } else {
       return 'GAME ENDED ALREADY';
     }
@@ -64,7 +65,7 @@ class Game {
     if (this.turn === 'X') {
       for (var i = 0; i < this.winningCombos.length; i++) {
         var win = this.winningCombos[i].split('').reduce((acc, elem) => {
-          return acc && this.X.includes(elem);
+          return acc && this.X.includes(Number(elem));
         }, true);
         if (win) {
           this.end = true;
@@ -82,13 +83,8 @@ class Game {
         }
       }
     }
+    if(this.X.length + this.O.length === 9){
+      return 'TIE GAME!';
+    }
   }
 }
-
-var test = new Game();
-test.makeMove(1);
-test.makeMove(4);
-test.makeMove(2);
-test.makeMove(5);
-test.makeMove(3);
-
